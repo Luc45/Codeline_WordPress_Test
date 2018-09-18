@@ -10,3 +10,7 @@
   License: MIT
   License URI: http://opensource.org/licenses/mit-license.php
 */
+.films-archive .filme img {
+  max-width: 100%;
+  height:auto;
+}

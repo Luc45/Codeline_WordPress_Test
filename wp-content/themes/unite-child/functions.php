@@ -10,3 +10,7 @@ function register_child_style() {
     );
 }
 add_action('wp_enqueue_scripts','register_child_style', PHP_INT_MAX);
+
+# Image sizes for films archive
+add_image_size('films-archive', 220, 310, false);
+add_image_size('films-archive-crop', 220, 310, true);
