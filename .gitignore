@@ -20,6 +20,7 @@
 /xmlrpc.php
 /wp-admin
 /wp-includes
+/wp-snapshots
 
 # Wp-content stuff that should be ignored
 wp-content/advanced-cache.php
