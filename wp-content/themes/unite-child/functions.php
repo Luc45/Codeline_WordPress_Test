@@ -6,7 +6,7 @@ function register_child_style() {
     wp_enqueue_style( 'child-style',
         get_stylesheet_directory_uri() . '/style.css',
         array( $parent_style ),
-        wp_get_theme()->get('Version')
+        filemtime(get_stylesheet_directory() . '/style.css')
     );
 }
 add_action('wp_enqueue_scripts','register_child_style', PHP_INT_MAX);
@@ -15,6 +15,10 @@ add_action('wp_enqueue_scripts','register_child_style', PHP_INT_MAX);
 add_image_size('films-archive', 220, 310, false);
 add_image_size('films-archive-crop', 220, 310, true);
 
+add_image_size('films-archive-half', 110, 155, false);
+add_image_size('films-archive-half-crop', 110, 155, true);
+
+# Debug function
 function dd($a){echo '<pre>';var_dump($a);echo '</pre>';exit;}
 
 /**
@@ -42,4 +46,34 @@ function get_from_taxonomy(array $taxonomies, string $retrieve, bool $return_onl
     }
     if ($return_only_values) return $values;
     return $taxonomies;
+}
+
+
+/**
+ * Our own version of "unite_post_nav function". Display navigation to next/previous film when applicable.
+ *
+ * @return void
+ */
+function unite_post_nav_films() {
+    // Don't print empty markup if there's nowhere to navigate.
+    $previous = ( is_attachment() ) ? get_post( get_post()->post_parent ) : get_adjacent_post( false, '', true );
+    $next     = get_adjacent_post( false, '', false );
+
+    if ( ! $next && ! $previous ) {
+        return;
+    }
+    $previous_thumbnail = get_the_post_thumbnail( $previous->ID, 'films-archive-half' );
+    $next_thumbnail = get_the_post_thumbnail( $next->ID, 'films-archive-half' );
+    $next_class = empty($previous) ? '' : 'text-right';
+    ?>
+    <nav class="navigation post-navigation" role="navigation">
+        <h1 class="screen-reader-text"><?php _e( 'Post navigation', 'unite' ); ?></h1>
+        <div class="nav-links">
+            <?php
+                previous_post_link( '<div class="nav-previous col-md-6">%link</div>', _x( $previous_thumbnail.'<br><i class="fa fa-chevron-left"></i> %title', 'Previous post link', 'unite' ) );
+                next_post_link(     '<div class="nav-next col-md-6 '.$next_class.'">%link</div>',     _x( $next_thumbnail.'<br>%title <i class="fa fa-chevron-right"></i>', 'Next post link',     'unite' ) );
+            ?>
+        </div><!-- .nav-links -->
+    </nav><!-- .navigation -->
+    <?php
 }

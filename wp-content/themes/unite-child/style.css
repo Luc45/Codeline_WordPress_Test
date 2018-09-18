@@ -20,3 +20,6 @@ ul.film-data {
     padding-left: 0;
     list-style: none;
 }
+.copyright {
+  display: none; /* Breaking the layout, since this is a demo, I prefer to hide it */
+}

@@ -14,7 +14,7 @@ get_header(); ?>
 
             <?php get_template_part( 'content', 'single-films' ); ?>
 
-            <?php unite_post_nav(); ?>
+            <?php unite_post_nav_films(); ?>
 
             <?php
                 // If comments are open or we have at least one comment, load up the comment template
