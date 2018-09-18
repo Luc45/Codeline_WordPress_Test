@@ -6,7 +6,15 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class('col-md-4 filme'); ?>>
     <header class="entry-header page-header">
 
-        <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail( 'films-archive' ); ?></a>
+        <a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>">
+            <?php
+                if (has_post_thumbnail()) {
+                    the_post_thumbnail( 'films-archive' );
+                } else {
+                    echo '<img src="'.wp_get_attachment_url(17).'">';
+                }
+            ?>
+            </a>
 
         <h2 class="entry-title"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
 
