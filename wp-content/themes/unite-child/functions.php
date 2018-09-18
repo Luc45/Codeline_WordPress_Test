@@ -133,9 +133,9 @@ function add_taxonomy_info_to_film_archive_list_excerpt( $excerpt ) {
         $ticket_price = get_field('ticket_price');
         $release_date = get_field('release_date');
 
-        # Displays ACF Fields
         $new_excerpt = $excerpt;
         $new_excerpt .= '<ul class="film-excerpt-data">';
+            # Displays ACF Fields
             if ($ticket_price) $new_excerpt .= '<li><strong>Ticket Price:</strong> U$ '.$ticket_price.'</li>';
             if ($release_date) $new_excerpt .= '<li><strong>Release Date:</strong> '.$release_date.'</li>';
 
