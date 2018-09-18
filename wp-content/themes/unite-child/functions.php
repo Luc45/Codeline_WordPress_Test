@@ -67,13 +67,51 @@ function unite_post_nav_films() {
     $next_class = empty($previous) ? '' : 'text-right';
     ?>
     <nav class="navigation post-navigation" role="navigation">
-        <h1 class="screen-reader-text"><?php _e( 'Post navigation', 'unite' ); ?></h1>
+        <h3 class="screen-reader-text"><?php _e( 'More films', 'unite' ); ?></h3>
         <div class="nav-links">
             <?php
-                previous_post_link( '<div class="nav-previous col-md-6">%link</div>', _x( $previous_thumbnail.'<br><i class="fa fa-chevron-left"></i> %title', 'Previous post link', 'unite' ) );
-                next_post_link(     '<div class="nav-next col-md-6 '.$next_class.'">%link</div>',     _x( $next_thumbnail.'<br>%title <i class="fa fa-chevron-right"></i>', 'Next post link',     'unite' ) );
+                previous_post_link( '<div class="nav-previous col-xs-6">%link</div>', _x( $previous_thumbnail.'<br><i class="fa fa-chevron-left"></i> %title', 'Previous post link', 'unite' ) );
+                next_post_link(     '<div class="nav-next col-xs-6 '.$next_class.'">%link</div>',     _x( $next_thumbnail.'<br>%title <i class="fa fa-chevron-right"></i>', 'Next post link',     'unite' ) );
             ?>
         </div><!-- .nav-links -->
     </nav><!-- .navigation -->
     <?php
 }
+
+/**
+*   Shortcode to display latest films
+*/
+function latest_films_shortcode() {
+    $films = get_posts(array(
+        'post_type' => 'films',
+        'numberposts' => 5
+    ));
+    ob_start();
+    ?>
+        <div class="latest-films-shortcode">
+            <h3 class="widget-title"><?=__('Latest Films', 'unite-child')?></h3>
+            <ul>
+                <?php foreach($films as $film):?>
+                    <li>
+                        <a href="<?=get_post_permalink($film->ID);?>">
+                            <div class="film-shortcode-img">
+                                <?php
+                                    if (has_post_thumbnail($film->ID)) {
+                                        echo get_the_post_thumbnail( $film->ID, 'films-archive-half' );
+                                    } else {
+                                        echo '<img src="'.wp_get_attachment_url(17).'">';
+                                    }
+                                ?>
+                            </div>
+                            <div class="film-shortcode-data">
+                                <div class="film-title"><?=$film->post_title?></div>
+                            </div>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode( 'latest_films', 'latest_films_shortcode' );

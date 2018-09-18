@@ -5,9 +5,9 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('single-film'); ?>>
-    <header class="entry-header page-header">
+    <header class="entry-header col-md-4">
 
-        <div class="col-md-4 movie-poster">
+        <div class="movie-poster">
             <?php
                 if (has_post_thumbnail()) {
                     the_post_thumbnail( 'films-archive' );
@@ -17,15 +17,13 @@
             ?>
         </div>
 
-        <h1 class="entry-title "><?php the_title(); ?></h1>
-
-        <div class="entry-meta">
-            <?php unite_posted_on(); ?>
-        </div><!-- .entry-meta -->
     </header><!-- .entry-header -->
 
-    <div class="entry-content">
+    <div class="entry-content col-md-8">
+        <h1 class="entry-title "><?php the_title(); ?></h1>
+
         <?php the_content(); ?>
+
         <ul class="film-data">
             <?php
                 # Gets ACF Fields
@@ -60,7 +58,8 @@
         ?>
     </div><!-- .entry-content -->
 
-    <footer class="entry-meta">
+
+    <footer class="entry-meta" style="clear:both">
         <?php
             /* translators: used between list items, there is a space after the comma */
             $category_list = get_the_category_list( __( ', ', 'unite' ) );

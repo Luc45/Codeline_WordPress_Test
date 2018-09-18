@@ -23,3 +23,19 @@ ul.film-data {
 .copyright {
   display: none; /* Breaking the layout, since this is a demo, I prefer to hide it */
 }
+.latest-films-shortcode img {
+  max-width:100%;
+}
+.latest-films-shortcode ul {
+    list-style: none;
+    padding-left:0;
+}
+.film-shortcode-data .film-title {
+    margin-top: 3px;
+}
+.latest-films-shortcode li{
+    margin-top: 1em;
+}
+.latest-films-shortcode a {
+  color:#000;
+}
