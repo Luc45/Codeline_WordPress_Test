@@ -115,3 +115,36 @@ function latest_films_shortcode() {
     return ob_get_clean();
 }
 add_shortcode( 'latest_films', 'latest_films_shortcode' );
+
+/**
+*   Adds taxonomy info to film archive list excerpt
+*/
+function add_taxonomy_info_to_film_archive_list_excerpt( $excerpt ) {
+    global $post;
+    if ($post->post_type == 'films') {
+
+        # Gets taxonomies
+        $taxonomies = wp_get_post_terms(get_the_ID(), array('genre', 'country'));
+        # Separate it programatically
+        $genres = implode(', ', get_from_taxonomy($taxonomies, 'genre'));
+        $countries = implode(', ', get_from_taxonomy($taxonomies, 'country'));
+
+        # Gets ACF fields
+        $ticket_price = get_field('ticket_price');
+        $release_date = get_field('release_date');
+
+        # Displays ACF Fields
+        $new_excerpt = $excerpt;
+        $new_excerpt .= '<ul class="film-excerpt-data">';
+            if ($ticket_price) $new_excerpt .= '<li><strong>Ticket Price:</strong> U$ '.$ticket_price.'</li>';
+            if ($release_date) $new_excerpt .= '<li><strong>Release Date:</strong> '.$release_date.'</li>';
+
+            # Display Taxonomies
+            if (!empty($genres)) $new_excerpt .= '<li><strong>Genres:</strong> '.$genres.'</li>';
+            if (!empty($countries)) $new_excerpt .= '<li><strong>Countries:</strong> '.$countries.'</li>';
+        $new_excerpt .= '</ul>';
+        return $new_excerpt;
+    }
+    return $excerpt;
+}
+add_filter( 'get_the_excerpt', 'add_taxonomy_info_to_film_archive_list_excerpt' );

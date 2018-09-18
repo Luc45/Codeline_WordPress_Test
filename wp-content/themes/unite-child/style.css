@@ -39,3 +39,6 @@ ul.film-data {
 .latest-films-shortcode a {
   color:#000;
 }
+ul.film-excerpt-data {
+  padding-left:15px;
+}
